@@ -1,0 +1,21 @@
+#!/usr/bin/env node
+
+require("colors");
+let app = require("../app");
+let http = require("http");
+
+process.on("warning", (e) => console.warn(e.stack));
+
+let port = 8080;
+app.set("trust proxy", true);
+app.set("port", port);
+
+/**
+ * Create server.
+ */
+let server = http.createServer(app);
+server.timeout = 60000; // 1 Min in ms
+
+server.listen(port, () => {
+	console.log(`SERVER Listening on ${port}`.green.bold);
+});
